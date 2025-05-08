@@ -85,6 +85,30 @@ export async function POST(request: Request) {
       payload,
     );
 
+    if (process.env.LOG_API_SEND_REQUESTS) {
+      // eslint-disable-next-line no-console
+      console.log(
+        JSON.stringify(
+          {
+            headers: request.headers,
+            payload,
+            result: {
+              ip,
+              userAgent,
+              device,
+              browser,
+              os,
+              country,
+              region,
+              city,
+            },
+          },
+          null,
+          2,
+        ),
+      );
+    }
+
     // Bot check
     if (!process.env.DISABLE_BOT_CHECK && isbot(userAgent)) {
       return json({ beep: 'boop' });

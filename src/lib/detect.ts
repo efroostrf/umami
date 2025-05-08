@@ -129,6 +129,19 @@ export async function getLocation(ip: string = '', headers: Headers, hasPayloadI
 
   const result = global[MAXMIND].get(ip);
 
+  if (process.env.LOG_API_SEND_REQUESTS) {
+    // eslint-disable-next-line no-console
+    console.log(
+      JSON.stringify(
+        {
+          maxmind: { ip, result },
+        },
+        null,
+        2,
+      ),
+    );
+  }
+
   if (result) {
     const country = result.country?.iso_code ?? result?.registered_country?.iso_code;
     const region = result.subdivisions?.[0]?.iso_code;
