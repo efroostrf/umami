@@ -90,7 +90,7 @@ export async function POST(request: Request) {
       console.log(
         JSON.stringify(
           {
-            headers: request.headers,
+            headers: Object.fromEntries(request.headers.entries()),
             payload,
             result: {
               ip,

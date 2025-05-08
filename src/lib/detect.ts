@@ -17,6 +17,20 @@ const MAXMIND = 'maxmind';
 export function getIpAddress(headers: Headers) {
   const customHeader = process.env.CLIENT_IP_HEADER;
 
+  if (process.env.LOG_API_SEND_REQUESTS) {
+    // eslint-disable-next-line no-console
+    console.log(
+      JSON.stringify(
+        {
+          customHeader,
+          headers: Object.fromEntries(headers.entries()),
+        },
+        null,
+        2,
+      ),
+    );
+  }
+
   if (customHeader && headers.get(customHeader)) {
     return headers.get(customHeader);
   }
